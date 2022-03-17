@@ -127,6 +127,7 @@ print("Please choose your mode")
 print("Mode 1 figure control")
 print("Mode 2 location control")
 print("Mode 3 remote control")
+t=1
 while True:
     try:
         now = time.time()
@@ -134,7 +135,7 @@ while True:
         # print(receive_data.decode())
         t = receive_data.decode()
         # print(t)
-        if (t == '0'):
+        '''if (t == '0'):
             print("stop")
         if (t == '1'):
             print("run")
@@ -143,38 +144,27 @@ while True:
         if (t == '3'):
             print("left")
         if (t == '4'):
-            print("right")
+            print("right")'''
     except socket.timeout:
         print("time out")
     if i%20==0:
-        if len(lmList) != 0:
-            fingers = []
-            if lmList[tipIds[0]][1] > lmList[tipIds[0] - 1][1]:
-                fingers.append(1)
-            else:
-                fingers.append(0)
-            for id in range(1, 5):
-                if lmList[tipIds[id]][2] < lmList[tipIds[id] - 2][2]:
-                    fingers.append(1)
-                else:
-                    fingers.append(0)
-            totalFingers = fingers.count(1)
+        if 0== 0:
             #print(lmList)
             #print(totalFingers)
             if mode==1:
-                if totalFingers==2:
+                if t[0]=='2':
                     print("back")
                     #back()
-                elif totalFingers==1:
+                elif t[0]=='1':
                     print("run")
                     #run()
-                elif totalFingers==3:
+                elif t[0]=='3':
                     print("left")
                     #left()
-                elif totalFingers==4:
+                elif t[0]=='4':
                     print("right")
                     #right()
-                elif totalFingers==5:
+                elif t[0]=='5':
                     print("choose mode")
                     mode = 5
                 else:
@@ -182,8 +172,8 @@ while True:
                     #stop()
             if mode==2:
                 if(i%50==0):
-                    locationx = lmList[9][1]
-                    locationy = lmList[9][2]
+                    locationx=int(t[1:4])
+                    locationy=int(t[4:7])
                     if (locationX - locationx >= 0):
                         # pwmleft()
                         print((locationX - locationx) / 6.4,"----------------x")
@@ -196,7 +186,7 @@ while True:
                         print((locationY - locationy) / 6.4,"-------------------y")
                     elif (locationY - locationy < 0):
                         print((locationy - locationY) / 6.4,"-------------------y")
-                if totalFingers==5:
+                if t[0]=='5':
                     print("choose mode")
                     mode = 5
             if mode==3:
@@ -214,22 +204,23 @@ while True:
                     elif flag == "s":
                         pass
                         # back()
+                    elif flag=="q":    
+                        print("choose mode")
+                        mode = 5
                     else:
                         pass
-                        # stop()
-                if totalFingers == 5:
-                    print("choose mode")
-                    mode = 5
+                        #stop()
+
             if mode == 5:
-                if totalFingers==1:
+                if t[0]=='1':
                     time.sleep(0.5)
-                    if totalFingers==1:
+                    if t[0]=='1':
                         mode = 1
-                elif totalFingers ==2:
+                elif t[0] =='2':
                     time.sleep(0.5)
-                    if totalFingers == 2:
+                    if t[0] == '2':
                         mode=2
-                elif totalFingers ==3:
+                elif t[0] =='3':
                     time.sleep(0.5)
-                    if totalFingers == 3:
+                    if t[0] == '3':
                         mode=3

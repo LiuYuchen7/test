@@ -11,7 +11,7 @@ while True:
         receive_data,client = server_socket.recvfrom(1024)
         #print(receive_data.decode())
         t=receive_data.decode()
-        #print(t)
+        print(t)
         if(t=='0'):
             print("stop")
         if(t=='1'):
